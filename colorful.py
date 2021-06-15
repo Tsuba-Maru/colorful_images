@@ -43,15 +43,16 @@ def main():
         l_img.append(dst)
 
     # Save images
+    file_name = args.file.split('/')[-1] # clip file name
     for i, data in enumerate(l_img) :
-        save_name = "./"+args.save_path+"/"+str(i).zfill(3)+"_"+args.file
-        cv2.imwrite(save_name, data, [cv2.IMWRITE_JPEG_QUALITY,100])
+        save_path = args.save_path+"/"+str(i).zfill(3)+"_"+file_name
+        cv2.imwrite(save_path, data, [cv2.IMWRITE_JPEG_QUALITY,100])
         if args.mix :
             next_data = l_img[i+1] if i != len(l_img)-1 else l_img[0]
-            file_name = args.file.split('.')[0]+"Mix."+args.file.split('.')[1]
-            save_name = "./"+args.save_path+"/"+str(i).zfill(3)+"_"+file_name
+            mix_name  = file_name.split('.')[0]+"Mix."+file_name.split('.')[1] # make mixed file name
+            save_path = args.save_path+"/"+str(i).zfill(3)+"_"+mix_name
             mix_data = mix(data, next_data)
-            cv2.imwrite(save_name, mix_data, [cv2.IMWRITE_JPEG_QUALITY,100])
+            cv2.imwrite(save_path, mix_data, [cv2.IMWRITE_JPEG_QUALITY,100])
 
 if __name__ == '__main__' :
     main()
